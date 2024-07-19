@@ -3,8 +3,8 @@ requires = ["setuptools>=60", "setuptools-scm>=8.0", "wheel"]
 
 [project]
 name = "solar_apparent_time"
-version = "1.0.1"
-description = "formats logging messages in color"
+version = "1.0.2"
+description = "methods to translate Python datetime between solar apparent time and Coordinate Universal Time (UTC)"
 readme = "README.md"
 authors = [
     { name = "Gregory H. Halverson", email = "gregory.h.halverson@jpl.nasa.gov" },

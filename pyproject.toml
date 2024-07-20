@@ -3,7 +3,7 @@ requires = ["setuptools>=60", "setuptools-scm>=8.0", "wheel"]
 
 [project]
 name = "solar_apparent_time"
-version = "1.1.0"
+version = "1.2.0"
 description = "methods to translate Python datetime between solar apparent time and Coordinate Universal Time (UTC)"
 readme = "README.md"
 authors = [

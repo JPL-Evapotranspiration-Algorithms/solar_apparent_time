@@ -30,7 +30,7 @@ Converts solar apparent time to Coordinated Universal Time (UTC) at given longit
 **Returns:**
 - datetime: The UTC time at the given longitude.
 
-### `UTC_offset_hours(geometry: rasters.RasterGeometry) -> rasters.Raster`
+### `UTC_offset_hours_for_area(geometry: rasters.RasterGeometry) -> rasters.Raster`
 
 Calculates the UTC offset in hours for an area defined by a `RasterGeometry` object from the `rasters` package.
 
@@ -40,7 +40,7 @@ Calculates the UTC offset in hours for an area defined by a `RasterGeometry` obj
 **Returns:**
 - rasters.Raster: The UTC offset in hours.
 
-### `day_of_year(time_UTC: datetime, geometry: rasters.RasterGeometry) -> rasters.Raster`
+### `solar_day_of_year_for_area(time_UTC: datetime, geometry: rasters.RasterGeometry) -> rasters.Raster`
 
 Calculates the day of the year for a given UTC time and an area defined by a `RasterGeometry` object from the `rasters` package.
 
@@ -51,7 +51,7 @@ Calculates the day of the year for a given UTC time and an area defined by a `Ra
 **Returns:**
 - rasters.Raster: The day of the year.
 
-### `hour_of_day(time_UTC: datetime, geometry: rasters.RasterGeometry) -> rasters.Raster`
+### `solar_hour_of_day_for_area(time_UTC: datetime, geometry: rasters.RasterGeometry) -> rasters.Raster`
 
 Calculates the hour of the day for a given UTC time and an area defined by a `RasterGeometry` object from the `rasters` package.
 

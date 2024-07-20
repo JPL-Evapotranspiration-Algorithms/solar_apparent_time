@@ -28,7 +28,7 @@ def solar_to_UTC(time_solar: datetime, lon: float) -> datetime:
     """
     return time_solar - timedelta(hours=(np.radians(lon) / np.pi * 12))
 
-def UTC_offset_hours(geometry: rt.RasterGeometry) -> rt.Raster:
+def UTC_offset_hours_for_area(geometry: rt.RasterGeometry) -> rt.Raster:
     """
     Calculates the UTC offset in hours for a given raster geometry.
 
@@ -40,7 +40,7 @@ def UTC_offset_hours(geometry: rt.RasterGeometry) -> rt.Raster:
     """
     return rt.Raster(np.radians(geometry.lon) / np.pi * 12, geometry=geometry)
 
-def day_of_year(time_UTC: datetime, geometry: rt.RasterGeometry) -> rt.Raster:
+def solar_day_of_year_for_area(time_UTC: datetime, geometry: rt.RasterGeometry) -> rt.Raster:
     """
     Calculates the day of the year for a given UTC time and raster geometry.
 
@@ -53,7 +53,7 @@ def day_of_year(time_UTC: datetime, geometry: rt.RasterGeometry) -> rt.Raster:
     """
     doy_UTC = time_UTC.timetuple().tm_yday
     hour_UTC = time_UTC.hour + time_UTC.minute / 60 + time_UTC.second / 3600
-    UTC_offset_hours = UTC_offset_hours(geometry=geometry)
+    UTC_offset_hours = UTC_offset_hours_for_area(geometry=geometry)
     hour_of_day = hour_UTC + UTC_offset_hours
     doy = doy_UTC
     doy = rt.where(hour_of_day < 0, doy - 1, doy)
@@ -61,7 +61,7 @@ def day_of_year(time_UTC: datetime, geometry: rt.RasterGeometry) -> rt.Raster:
 
     return doy
 
-def hour_of_day(time_UTC: datetime, geometry: rt.RasterGeometry) -> rt.Raster:
+def solar_hour_of_day_for_area(time_UTC: datetime, geometry: rt.RasterGeometry) -> rt.Raster:
     """
     Calculates the hour of the day for a given UTC time and raster geometry.
 
@@ -73,7 +73,7 @@ def hour_of_day(time_UTC: datetime, geometry: rt.RasterGeometry) -> rt.Raster:
     rt.Raster: The hour of the day.
     """
     hour_UTC = time_UTC.hour + time_UTC.minute / 60 + time_UTC.second / 3600
-    UTC_offset_hours = UTC_offset_hours(geometry=geometry)
+    UTC_offset_hours = UTC_offset_hours_for_area(geometry=geometry)
     hour_of_day = hour_UTC + UTC_offset_hours
     hour_of_day = rt.where(hour_of_day < 0, hour_of_day + 24, hour_of_day)
     hour_of_day = rt.where(hour_of_day > 24, hour_of_day - 24, hour_of_day)

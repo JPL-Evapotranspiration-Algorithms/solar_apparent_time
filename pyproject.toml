@@ -3,7 +3,7 @@ requires = ["setuptools>=60", "setuptools-scm>=8.0", "wheel"]
 
 [project]
 name = "solar_apparent_time"
-version = "1.0.2"
+version = "1.1.0"
 description = "methods to translate Python datetime between solar apparent time and Coordinate Universal Time (UTC)"
 readme = "README.md"
 authors = [
@@ -14,10 +14,14 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "numpy"
+    "numpy",
+    "rasters"
 ]
 
 requires-python = ">=3.11"
 
 [tool.setuptools.package-data]
 solar_apparent_time = ["*.txt"]
+
+[project.urls]
+"Homepage" = "https://github.com/JPL-Evapotranspiration-Algorithms/solar_apparent_time"

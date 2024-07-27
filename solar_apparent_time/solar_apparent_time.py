@@ -1,3 +1,5 @@
+from typing import Union
+
 from datetime import datetime, timedelta
 import numpy as np
 import rasters as rt
@@ -27,6 +29,19 @@ def solar_to_UTC(time_solar: datetime, lon: float) -> datetime:
     datetime: The UTC time at the given longitude.
     """
     return time_solar - timedelta(hours=(np.radians(lon) / np.pi * 12))
+
+def UTC_offset_hours_for_longitude(lon: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+    """
+    Calculates the offset in hours from UTC based on the given longitude.
+
+    Args:
+        lon (Union[float, np.ndarray]): The longitude in degrees.
+
+    Returns:
+        Union[float, np.ndarray]: The calculated offset in hours from UTC.
+    """
+    # Convert longitude to radians and calculate the offset in hours from UTC
+    return np.radians(lon) / np.pi * 12
 
 def UTC_offset_hours_for_area(geometry: rt.RasterGeometry) -> rt.Raster:
     """
@@ -60,6 +75,29 @@ def solar_day_of_year_for_area(time_UTC: datetime, geometry: rt.RasterGeometry) 
     doy = rt.where(hour_of_day > 24, doy + 1, doy)
 
     return doy
+
+def solar_day_of_year_for_longitude(time_UTC: datetime, lon: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+    """
+    Calculates the day of year based on the given UTC time and longitude.
+
+    Args:
+        time_UTC (datetime.datetime): The UTC time to calculate the day of year for.
+        lon (Union[float, np.ndarray]): The longitude in degrees.
+
+    Returns:
+        Union[float, np.ndarray]: The calculated day of year.
+    """
+    # Calculate the day of year at the given longitude
+    DOY_UTC = time_UTC.timetuple().tm_yday
+    hour_UTC = time_UTC.hour + time_UTC.minute / 60 + time_UTC.second / 3600
+    offset = UTC_offset_hours_for_longitude(lon)
+    hour_of_day = hour_UTC + offset
+    DOY = DOY_UTC
+    # Adjust the day of year if the hour of day is outside the range [0, 24]
+    DOY = np.where(hour_of_day < 0, DOY - 1, DOY)
+    DOY = np.where(hour_of_day > 24, DOY + 1, DOY)
+
+    return DOY
 
 def solar_hour_of_day_for_area(time_UTC: datetime, geometry: rt.RasterGeometry) -> rt.Raster:
     """

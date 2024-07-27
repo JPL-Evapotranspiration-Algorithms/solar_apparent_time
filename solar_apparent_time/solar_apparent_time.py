@@ -30,7 +30,7 @@ def solar_to_UTC(time_solar: datetime, lon: float) -> datetime:
     """
     return time_solar - timedelta(hours=(np.radians(lon) / np.pi * 12))
 
-def UTC_offset_hours(lon: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+def UTC_offset_hours_for_longitude(lon: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
     """
     Calculates the offset in hours from UTC based on the given longitude.
 
@@ -90,7 +90,7 @@ def solar_day_of_year_for_longitude(time_UTC: datetime, lon: Union[float, np.nda
     # Calculate the day of year at the given longitude
     DOY_UTC = time_UTC.timetuple().tm_yday
     hour_UTC = time_UTC.hour + time_UTC.minute / 60 + time_UTC.second / 3600
-    offset = UTC_offset_hours(lon)
+    offset = UTC_offset_hours_for_longitude(lon)
     hour_of_day = hour_UTC + offset
     DOY = DOY_UTC
     # Adjust the day of year if the hour of day is outside the range [0, 24]

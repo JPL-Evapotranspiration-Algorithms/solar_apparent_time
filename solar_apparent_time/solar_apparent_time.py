@@ -76,6 +76,29 @@ def solar_day_of_year_for_area(time_UTC: datetime, geometry: rt.RasterGeometry) 
 
     return doy
 
+def solar_day_of_year_for_longitude(time_UTC: datetime, lon: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+    """
+    Calculates the day of year based on the given UTC time and longitude.
+
+    Args:
+        time_UTC (datetime.datetime): The UTC time to calculate the day of year for.
+        lon (Union[float, np.ndarray]): The longitude in degrees.
+
+    Returns:
+        Union[float, np.ndarray]: The calculated day of year.
+    """
+    # Calculate the day of year at the given longitude
+    DOY_UTC = time_UTC.timetuple().tm_yday
+    hour_UTC = time_UTC.hour + time_UTC.minute / 60 + time_UTC.second / 3600
+    offset = UTC_offset_hours(lon)
+    hour_of_day = hour_UTC + offset
+    DOY = DOY_UTC
+    # Adjust the day of year if the hour of day is outside the range [0, 24]
+    DOY = np.where(hour_of_day < 0, DOY - 1, DOY)
+    DOY = np.where(hour_of_day > 24, DOY + 1, DOY)
+
+    return DOY
+
 def solar_hour_of_day_for_area(time_UTC: datetime, geometry: rt.RasterGeometry) -> rt.Raster:
     """
     Calculates the hour of the day for a given UTC time and raster geometry.

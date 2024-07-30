@@ -6,7 +6,19 @@ The `solar_apparent_time` Python package translates Python datetime between sola
 [gregory.h.halverson@jpl.nasa.gov](mailto:gregory.h.halverson@jpl.nasa.gov)<br>
 NASA Jet Propulsion Laboratory 329G
 
+## Installation
+
+This package is available on PyPi as a [pip package](https://pypi.org/project/solar-apparent-time/) called `solar-apparent-time` with dashes.
+
 ## Usage
+
+### Importing
+
+Import this package as `solar_apparent_time` with under-scores.
+
+```python
+import solar_apparent_time
+```
 
 ### `UTC_to_solar(time_UTC: datetime, lon: float) -> datetime`
 
